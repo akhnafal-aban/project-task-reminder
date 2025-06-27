@@ -3,8 +3,9 @@
         <div>
             <!-- Branding -->
             <div class="flex flex-col items-center mb-8 select-none">
-                <img src="https://images.glints.com/unsafe/glints-dashboard.oss-ap-southeast-1.aliyuncs.com/company-logo/e5854fb24f56d1112295bc32db67ebbe.png" alt="Logo" class="w-14 h-14 rounded-full shadow-lg mb-2 bg-white object-contain border-2 border-[#38d4ae]">
-                <span class="text-xl font-bold text-[#38d4ae] tracking-wide">Project Task</span>
+                <img src="https://images.glints.com/unsafe/glints-dashboard.oss-ap-southeast-1.aliyuncs.com/company-logo/e5854fb24f56d1112295bc32db67ebbe.png"
+                    alt="Logo"
+                    class="w-30 h-20 rounded-full shadow-lg mb-2 bg-white object-contain border-2 border-[#38d4ae]">
             </div>
             <ul class="space-y-2 font-medium">
                 <li>

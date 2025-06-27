@@ -51,6 +51,17 @@
                 function($m){ $m->to('akhnafal03@gmail.com')->subject('Test'); });</div>
             <p class="text-[#b3b3b3] text-xs mt-2">Ganti alamat email sesuai kebutuhan. Jika berhasil, email akan terkirim
                 ke alamat yang dituju.</p>
+            <div class="mt-4">
+                <p class="text-[#b3b3b3] text-sm mb-2">Atau jalankan command berikut untuk langsung menguji fitur reminder
+                    otomatis sesuai logic aplikasi:</p>
+                <div class="bg-[#232329] text-xs rounded p-3 font-mono text-[#38d4ae]">php artisan tasks:send-reminders
+                </div>
+                <p class="text-[#b3b3b3] text-xs mt-2">Command ini akan menjalankan logic pengiriman email reminder ke user
+                    yang memiliki tugas mendekati deadline.</p>
+                <p class="text-[#b3b3b3] text-xs mt-2">Mohon Ganti email "akhnafal03@gmail.com" dengan email anda untuk
+                    mengetahui apakah benar benar terkirim</p>
+
+            </div>
         </div>
     </div>
 @endsection

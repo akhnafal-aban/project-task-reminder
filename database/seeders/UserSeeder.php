@@ -9,12 +9,14 @@ use Illuminate\Database\Seeder;
 
 final class UserSeeder extends Seeder
 {
+    const ADMIN_EMAIL = '22523179@students.uii.ac.id';
+    const AKHNAFAL_EMAIL = 'akhnafal03@gmail.com';
     public function run(): void
     {
         // Create admin users
         User::factory()->admin()->create([
             'name' => 'admin',
-            'email' => '22523179@students.uii.ac.id',
+            'email' => self::ADMIN_EMAIL,
             'password' => bcrypt('password'),
         ]);
 
@@ -27,7 +29,7 @@ final class UserSeeder extends Seeder
         // Create member users
         User::factory()->member()->create([
             'name' => 'akhnafal',
-            'email' => 'akhnafal03@gmail.com',
+            'email' => self::AKHNAFAL_EMAIL,
             'password' => bcrypt('password'),
         ]);
 

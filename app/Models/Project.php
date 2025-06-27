@@ -39,7 +39,7 @@ final class Project extends Model
     public function assignedUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'project_user')
-            ->withTimestamps('assigned_at');
+            ->withPivot('assigned_at');
     }
 
     public function tasks(): HasMany

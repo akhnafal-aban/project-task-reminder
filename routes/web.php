@@ -46,12 +46,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // User management
     Route::resource('users', UserController::class);
 
-    // Task management (index, show, comment, store, update)
-    Route::get('projects/{project}/tasks', [AdminTaskController::class, 'index'])->name('task.index');
-    Route::get('projects/{project}/tasks/{task}', [AdminTaskController::class, 'show'])->name('task.show');
-    Route::post('projects/{project}/tasks/{task}/comment', [AdminTaskController::class, 'storeComment'])->name('task.comment');
-    Route::post('projects/{project}/tasks', [AdminTaskController::class, 'store'])->name('task.store');
-    Route::put('projects/{project}/tasks/{task}', [AdminTaskController::class, 'update'])->name('task.update');
+    // Task management (index, show, comment)
+    Route::prefix('tasks')->name('tasks.')->group(function () {
+        Route::get('/', [AdminTaskController::class, 'index'])->name('index');
+        Route::get('/create', [AdminTaskController::class, 'create'])->name('create');
+        Route::get('/{task}/edit', [AdminTaskController::class, 'edit'])->name('edit');
+        Route::get('/{task}', [AdminTaskController::class, 'show'])->name('show');
+        Route::post('/{task}/comment', [AdminTaskController::class, 'storeComment'])->name('comment');
+        Route::post('/', [AdminTaskController::class, 'store'])->name('store');
+        Route::put('/{task}', [AdminTaskController::class, 'update'])->name('update');
+        Route::delete('/{task}', [AdminTaskController::class, 'destroy'])->name('destroy');
+    });
 });
 
 Route::middleware(['auth', 'role:member'])->prefix('member')->name('member.')->group(function () {

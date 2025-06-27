@@ -19,9 +19,41 @@ use App\Http\Requests\Admin\AssignProjectMembersRequest;
 
 class ProjectController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $projects = Project::latest()->paginate(10);
+        $query = Project::query();
+
+        // Filtering by status
+        if ($request->filled('status')) {
+            if ($request->status === 'active') {
+                $query->whereDate('start_date', '<=', now())
+                      ->whereDate('end_date', '>=', now());
+            } elseif ($request->status === 'upcoming') {
+                $query->whereDate('start_date', '>', now());
+            } elseif ($request->status === 'finished') {
+                $query->whereDate('end_date', '<', now());
+            }
+        }
+
+        // Search by name or id
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhere('id', $search);
+            });
+        }
+
+        // Sorting
+        $sort = $request->get('sort', 'id');
+        $direction = $request->get('direction', 'desc');
+        if (in_array($sort, ['id', 'name', 'start_date', 'end_date']) && in_array($direction, ['asc', 'desc'])) {
+            $query->orderBy($sort, $direction);
+        } else {
+            $query->orderBy('id', 'desc');
+        }
+
+        $projects = $query->paginate(10)->appends($request->all());
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -40,14 +72,9 @@ class ProjectController extends Controller
 
     public function show(Project $project): View
     {
-        $membersData = [];
-        foreach ($project->assignedUsers as $member) {
-            $membersData[] = [
-                'user' => $member,
-                'tasks' => $member->assignedTasks()->where('project_id', $project->id)->get(),
-            ];
-        }
-        return view('admin.projects.show', compact('project', 'membersData'));
+        $tasks = $project->tasks()->with('assignedUser')->get();
+        $members = $project->assignedUsers;
+        return view('admin.projects.show', compact('project', 'tasks', 'members'));
     }
 
     public function edit(Project $project): View

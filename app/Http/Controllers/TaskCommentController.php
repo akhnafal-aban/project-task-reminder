@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+declare(strict_types=1);
 
+namespace App\Http\Controllers;
 use App\Http\Requests\StoreTaskCommentRequest;
 use App\Models\Task;
 use App\Services\TaskCommentService;

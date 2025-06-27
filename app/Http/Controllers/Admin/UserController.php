@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
@@ -14,8 +16,28 @@ class UserController extends Controller
 {
     public function index(): View
     {
-        $users = User::latest()->paginate(10);
-        return view('admin.users.index', compact('users'));
+        $query = User::query();
+
+        // Filter & search
+        $search = request('search');
+        $role = request('role');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%") ;
+            });
+        }
+        if ($role && $role !== 'all') {
+            $query->where('role', $role);
+        }
+
+        $users = $query->latest()->paginate(10)->withQueryString();
+
+        // Ambil daftar role unik untuk dropdown
+        $roles = collect(\App\Enums\UserRole::cases() ?? [])->pluck('name');
+
+        return view('admin.users.index', compact('users', 'roles', 'search', 'role'));
     }
 
     public function create(): View
@@ -33,9 +55,11 @@ class UserController extends Controller
 
     public function show(User $user): View
     {
-        $projects = $user->projects()->with(['tasks' => function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        }])->get();
+        // Ambil proyek yang dibuat user dan proyek yang diikuti user (assigned)
+        $createdProjects = $user->createdProjects()->with('tasks')->get();
+        $assignedProjects = $user->assignedProjects()->with('tasks')->get();
+        // Gabungkan dan hilangkan duplikat berdasarkan id
+        $projects = $createdProjects->merge($assignedProjects)->unique('id');
 
         $tasks = $user->tasks()->get();
         $highPriorityTasks = $tasks->where('priority', 'high');

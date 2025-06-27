@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -73,7 +75,7 @@ class ProjectController extends Controller
     public function show(Project $project): View
     {
         $tasks = $project->tasks()->with('assignedUser')->get();
-        $members = $project->assignedUsers;
+        $members = $project->members;
         return view('admin.projects.show', compact('project', 'tasks', 'members'));
     }
 
@@ -97,7 +99,7 @@ class ProjectController extends Controller
 
     public function createTask(Project $project): View
     {
-        $members = $project->assignedUsers;
+        $members = $project->members;
         return view('admin.projects.tasks-create', compact('project', 'members'));
     }
 
@@ -114,7 +116,7 @@ class ProjectController extends Controller
         if ($task->project_id !== $project->id) {
             abort(404);
         }
-        $members = $project->assignedUsers;
+        $members = $project->members;
         return view('admin.projects.tasks-edit', compact('project', 'task', 'members'));
     }
 

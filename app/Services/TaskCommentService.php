@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\TaskComment;
 use App\Models\Task;
 use App\Models\User;
 
-class TaskCommentService
+final readonly class TaskCommentService
 {
     /**
      * Tambahkan komentar ke task tertentu

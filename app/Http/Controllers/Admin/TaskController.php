@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Task;
@@ -53,8 +55,11 @@ class TaskController extends Controller
 
     public function show(Task $task): View
     {
-        $comments = $task->comments()->with('user')->latest()->get();
-        return view('admin.task.show', compact('task', 'comments'));
+        $task->load(['project', 'comments.user']);
+        return view('admin.task.show', [
+            'task' => $task,
+            'comments' => $task->comments,
+        ]);
     }
 
     public function create(): View
@@ -78,14 +83,12 @@ class TaskController extends Controller
         return redirect()->route('admin.tasks.index')->with('success', 'Tugas berhasil diperbarui.');
     }
 
-    public function storeComment(StoreTaskCommentRequest $request, Task $task): RedirectResponse
+    // Menambahkan komentar (disamakan dengan member)
+    public function addComment(\Illuminate\Http\Request $request, Task $task): \Illuminate\Http\RedirectResponse
     {
-        $validated = $request->validated();
-        $user = $request->user();
-        app(TaskCommentService::class)->addComment($task, $user, $validated['comment']);
-        return redirect()->route('admin.tasks.show', $task)
-            ->withFragment('comments')
-            ->with('success', 'Komentar berhasil ditambahkan.');
+        $request->validate(['comment' => 'required|string']);
+        app(TaskCommentService::class)->addComment($task, $request->user(), $request->comment);
+        return back()->with('success', 'Komentar berhasil ditambahkan.');
     }
 
     public function destroy(Task $task): RedirectResponse

@@ -12,6 +12,5 @@
             <li>Pengingat Otomatis (Reminder)</li>
             <li>Manajemen User (CRUD User)</li>
         </ul>
-        <p class="mt-4 text-gray-400">Gunakan menu di atas untuk mengelola sistem.</p>
     </div>
 @endsection

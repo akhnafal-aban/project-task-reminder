@@ -13,6 +13,5 @@
             <li>Menambahkan Keterangan/Komentar</li>
             <li>Menerima Reminder Otomatis</li>
         </ul>
-        <p class="mt-4 text-gray-400">Gunakan menu di atas untuk mengelola tugas Anda.</p>
     </div>
 @endsection

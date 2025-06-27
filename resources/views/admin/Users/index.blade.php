@@ -2,10 +2,24 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <div class="flex flex-wrap md:flex-nowrap items-end justify-between gap-4 mb-6">
-        <h2 class="text-xl font-bold text-[#38d4ae]">Users</h2>
-        <div class="flex-0 ml-auto">
-            <a href="{{ route('admin.users.create') }}" class="bg-[#38d4ae] text-[#18181b] px-4 py-2 rounded hover:bg-[#2bbd99] transition font-semibold whitespace-nowrap">+ User</a>
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+        <form method="GET" action="{{ route('admin.users.index') }}" class="flex flex-wrap gap-4 items-end flex-1" id="user-filter-form">
+            <div>
+                <label for="search" class="block text-sm text-[#b3b3b3] mb-1">Cari Nama/Email</label>
+                <input type="text" name="search" id="search" value="{{ $search ?? request('search') }}" placeholder="Cari user..." class="bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#38d4ae]" onchange="this.form.submit()">
+            </div>
+            <div>
+                <label for="role" class="block text-sm text-[#b3b3b3] mb-1">Role</label>
+                <select name="role" id="role" class="bg-[#18181b] text-[#b3b3b3] border border-[#38383f] rounded px-3 py-2 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-[#38d4ae]" style="background-position:right 0.75rem center;" onchange="this.form.submit()">
+                    <option value="all" @if(($role ?? request('role') ?? 'all') === 'all') selected @endif>Semua</option>
+                    @foreach($roles as $r)
+                        <option value="{{ $r }}" @if(($role ?? request('role')) === $r) selected @endif>{{ ucfirst($r) }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </form>
+        <div class="flex md:ml-4 mt-4 md:mt-0">
+            <a href="{{ route('admin.users.create') }}" class="bg-[#38d4ae] text-[#18181b] px-4 py-2 rounded hover:bg-[#2bbd99] transition font-semibold whitespace-nowrap w-full md:w-auto text-center">+ Tambah User</a>
         </div>
     </div>
     <div class="overflow-x-auto">

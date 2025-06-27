@@ -3,9 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Member\ProjectController as MemberProjectController;
+use App\Http\Controllers\Member\TaskController as MemberTaskController;
+use App\Http\Controllers\Admin\TaskController as AdminTaskController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\TaskController as AdminTaskController;
+
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,7 +23,6 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
 });
-
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::middleware('auth')->get('/dashboard', function () {
@@ -52,7 +57,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::get('/create', [AdminTaskController::class, 'create'])->name('create');
         Route::get('/{task}/edit', [AdminTaskController::class, 'edit'])->name('edit');
         Route::get('/{task}', [AdminTaskController::class, 'show'])->name('show');
-        Route::post('/{task}/comment', [AdminTaskController::class, 'storeComment'])->name('comment');
+        Route::post('/{task}/comment', [AdminTaskController::class, 'addComment'])->name('comment');
         Route::post('/', [AdminTaskController::class, 'store'])->name('store');
         Route::put('/{task}', [AdminTaskController::class, 'update'])->name('update');
         Route::delete('/{task}', [AdminTaskController::class, 'destroy'])->name('destroy');
@@ -63,5 +68,8 @@ Route::middleware(['auth', 'role:member'])->prefix('member')->name('member.')->g
     Route::get('/dashboard', function () {
         return view('member.dashboard');
     })->name('dashboard');
-    // Tambahkan route member lain di sini
+    Route::resource('projects', MemberProjectController::class)->only(['index', 'show']);
+    Route::resource('tasks', MemberTaskController::class)->only(['index', 'show']);
+    Route::patch('tasks/{task}/status', [MemberTaskController::class, 'updateStatus'])->name('tasks.updateStatus');
+    Route::post('tasks/{task}/comment', [MemberTaskController::class, 'addComment'])->name('tasks.addComment');
 });

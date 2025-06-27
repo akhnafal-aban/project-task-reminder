@@ -1,73 +1,62 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-xl mx-auto bg-[#232329] rounded-lg shadow p-6">
-        <h2 class="text-xl font-bold text-[#f3f4f6] mb-6">Edit Task</h2>
-        <form method="POST" action="{{ route('admin.tasks.update', $task) }}">
-            @csrf
-            @method('PUT')
-            <div class="mb-4">
-                <label class="block text-sm text-[#b3b3b3] mb-1">Title</label>
-                <input type="text" name="title" value="{{ old('title', $task->title) }}" class="w-full bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#38d4ae]" required />
-                @error('title')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm text-[#b3b3b3] mb-1">Project</label>
-                <input type="search" placeholder="Search project..." class="w-full bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2 mb-2" oninput="filterSelectOptions(this, 'project_id')">
-                <select name="project_id" id="project_id" class="w-full bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2" required>
-                    <option value="">Select Project</option>
-                    @foreach($projects as $project)
-                        <option value="{{ $project->id }}" @selected(old('project_id', $task->project_id) == $project->id)>{{ $project->name }}</option>
-                    @endforeach
-                </select>
-                @error('project_id')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm text-[#b3b3b3] mb-1">Assignee</label>
-                <input type="search" placeholder="Search user..." class="w-full bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2 mb-2" oninput="filterSelectOptions(this, 'assigned_to')">
-                <select name="assigned_to" id="assigned_to" class="w-full bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2">
-                    <option value="">Select User</option>
-                    @foreach($users as $user)
-                        <option value="{{ $user->id }}" @selected(old('assigned_to', $task->assigned_to) == $user->id)>{{ $user->name }}</option>
-                    @endforeach
-                </select>
-                @error('assigned_to')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm text-[#b3b3b3] mb-1">Priority</label>
-                <select name="priority" class="w-full bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2" required>
-                    @foreach(\App\Enums\TaskPriority::cases() as $priority)
-                        <option value="{{ $priority->value }}" @selected(old('priority', $task->priority->value) == $priority->value)>{{ $priority->name }}</option>
-                    @endforeach
-                </select>
-                @error('priority')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm text-[#b3b3b3] mb-1">Status</label>
-                <select name="status" class="w-full bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2" required>
-                    @foreach(\App\Enums\TaskStatus::cases() as $status)
-                        <option value="{{ $status->value }}" @selected(old('status', $task->status->value) == $status->value)>{{ $status->name }}</option>
-                    @endforeach
-                </select>
-                @error('status')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm text-[#b3b3b3] mb-1">Due Date</label>
-                <input type="date" name="due_date" value="{{ old('due_date', $task->due_date ? $task->due_date->format('Y-m-d') : '') }}" class="w-full bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2" />
-                @error('due_date')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
-            </div>
-            <div class="mb-6">
-                <label class="block text-sm text-[#b3b3b3] mb-1">Description</label>
-                <textarea name="description" rows="3" class="w-full bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2">{{ old('description', $task->description) }}</textarea>
-                @error('description')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
-            </div>
-            <div class="flex justify-end">
-                <a href="{{ route('admin.tasks.index') }}" class="mr-4 text-[#b3b3b3] hover:text-[#38d4ae]">Cancel</a>
-                <button type="submit" class="bg-[#38d4ae] text-[#18181b] px-4 py-2 rounded hover:bg-[#2bbd99] transition font-semibold">Update Task</button>
-            </div>
-        </form>
-    </div>
+<div class="max-w-xl mx-auto bg-[#232329] rounded-lg shadow p-8 mt-8">
+    <h2 class="text-2xl font-bold text-[#38d4ae] mb-8">Edit Tugas</h2>
+    <form method="POST" action="{{ route('admin.tasks.update', $task) }}" onsubmit="return validateTaskForm(this)">
+        @csrf
+        @method('PUT')
+        <div class="mb-5">
+            <label class="block text-sm font-semibold text-[#f3f4f6] mb-1">Judul Tugas <span class="text-red-500">*</span></label>
+            <input type="text" name="title" value="{{ old('title', $task->title) }}" class="w-full bg-[#18181b] text-[#f3f4f6] border @error('title') border-red-500 @else border-[#38383f] @enderror rounded px-3 py-2 focus:ring-2 focus:ring-[#38d4ae]" required />
+            @error('title')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
+        </div>
+        <div class="mb-5">
+            <label class="block text-sm font-semibold text-[#f3f4f6] mb-1">Proyek <span class="text-red-500">*</span></label>
+            <input type="search" placeholder="Cari proyek..." class="w-full bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2 mb-2" oninput="filterSelectOptions(this, 'project_id')">
+            <select name="project_id" id="project_id" class="w-full bg-[#18181b] text-[#f3f4f6] border @error('project_id') border-red-500 @else border-[#38383f] @enderror rounded px-3 py-2" required>
+                <option value="">Pilih Proyek</option>
+                @foreach($projects as $project)
+                    <option value="{{ $project->id }}" @selected(old('project_id', $task->project_id) == $project->id)>{{ $project->name }}</option>
+                @endforeach
+            </select>
+            @error('project_id')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
+        </div>
+        <div class="mb-5">
+            <label class="block text-sm font-semibold text-[#f3f4f6] mb-1">Ditugaskan ke <span class="text-red-500">*</span></label>
+            <input type="search" placeholder="Cari user..." class="w-full bg-[#18181b] text-[#f3f4f6] border border-[#38383f] rounded px-3 py-2 mb-2" oninput="filterSelectOptions(this, 'assigned_to')">
+            <select name="assigned_to" id="assigned_to" class="w-full bg-[#18181b] text-[#f3f4f6] border @error('assigned_to') border-red-500 @else border-[#38383f] @enderror rounded px-3 py-2" required>
+                <option value="">Pilih User</option>
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}" @selected(old('assigned_to', $task->assigned_to) == $user->id)>{{ $user->name }}</option>
+                @endforeach
+            </select>
+            @error('assigned_to')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
+        </div>
+        <div class="mb-5">
+            <label class="block text-sm font-semibold text-[#f3f4f6] mb-1">Prioritas <span class="text-red-500">*</span></label>
+            <select name="priority" class="w-full bg-[#18181b] text-[#f3f4f6] border @error('priority') border-red-500 @else border-[#38383f] @enderror rounded px-3 py-2" required>
+                @foreach(\App\Enums\TaskPriority::cases() as $priority)
+                    <option value="{{ $priority->value }}" @selected(old('priority', $task->priority->value) == $priority->value)>{{ $priority->name }}</option>
+                @endforeach
+            </select>
+            @error('priority')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
+        </div>
+        <div class="mb-5">
+            <label class="block text-sm font-semibold text-[#f3f4f6] mb-1">Jatuh Tempo <span class="text-red-500">*</span></label>
+            <input type="date" name="due_date" value="{{ old('due_date', $task->due_date ? $task->due_date->format('Y-m-d') : '') }}" class="w-full bg-[#18181b] text-[#f3f4f6] @error('due_date') border-red-500 @else border-[#38383f] @enderror border rounded px-3 py-2" required />
+            @error('due_date')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
+        </div>
+        <div class="mb-8">
+            <label class="block text-sm font-semibold text-[#f3f4f6] mb-1">Deskripsi <span class="text-red-500">*</span></label>
+            <textarea name="description" rows="3" class="w-full bg-[#18181b] text-[#f3f4f6] @error('description') border-red-500 @else border-[#38383f] @enderror border rounded px-3 py-2" required>{{ old('description', $task->description) }}</textarea>
+            @error('description')<div class="text-red-400 text-xs mt-1">{{ $message }}</div>@enderror
+        </div>
+        <div class="flex justify-end gap-3">
+            <a href="{{ route('admin.tasks.index') }}" class="px-4 py-2 rounded bg-[#38383f] text-[#f3f4f6] hover:bg-[#2b2b2f] transition">Batal</a>
+            <button type="submit" class="px-4 py-2 rounded bg-[#38d4ae] text-[#18181b] font-semibold hover:bg-[#2bbd99] transition">Simpan</button>
+        </div>
+    </form>
 </div>
 <script>
 function filterSelectOptions(input, selectId) {
@@ -75,9 +64,36 @@ function filterSelectOptions(input, selectId) {
     const select = document.getElementById(selectId);
     for (let i = 0; i < select.options.length; i++) {
         const option = select.options[i];
-        if (i === 0) { option.style.display = ''; continue; } // always show placeholder
+        if (i === 0) { option.style.display = ''; continue; }
         option.style.display = option.text.toLowerCase().includes(filter) ? '' : 'none';
     }
+}
+function validateTaskForm(form) {
+    let valid = true;
+    let fields = [
+        { name: 'title', label: 'Judul Tugas' },
+        { name: 'project_id', label: 'Proyek' },
+        { name: 'assigned_to', label: 'Ditugaskan ke' },
+        { name: 'priority', label: 'Prioritas' },
+        { name: 'due_date', label: 'Jatuh Tempo' },
+        { name: 'description', label: 'Deskripsi' },
+    ];
+    let firstInvalid = null;
+    fields.forEach(f => {
+        let el = form.elements[f.name];
+        if (el && !el.value) {
+            valid = false;
+            el.classList.add('border-red-500');
+            if (!firstInvalid) firstInvalid = el;
+        } else if (el) {
+            el.classList.remove('border-red-500');
+        }
+    });
+    if (!valid) {
+        alert('Semua kolom wajib diisi!');
+        if (firstInvalid) firstInvalid.focus();
+    }
+    return valid;
 }
 </script>
 @endsection

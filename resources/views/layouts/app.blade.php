@@ -19,8 +19,8 @@
     @else
         @include('layouts.sidebar')
     @endif
-    <div class="p-4 sm:ml-64">
-        <main class="container mx-auto">
+    <div class="sm:ml-64 min-h-screen flex flex-col">
+        <main class="flex-1 p-4">
             @yield('content')
         </main>
     </div>

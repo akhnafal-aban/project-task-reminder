@@ -22,13 +22,9 @@ A modern Laravel-based project management system with dark mode, role-based dash
 ---
 
 ## Entity Relationship Diagram (ERD)
-
-```
-User ───< Project_User >─── Project
-  │                          │
-  │                          │
-  └──< Task ───< TaskComment
-```
+<p align="center">
+  <img src="https://i.ibb.co/PZZ6nF1/erd-taskreminder.png" alt="ERD Task Reminder" width="600">
+</p>
 - **User**: id, name, email, password, role
 - **Project**: id, name, description, owner_id
 - **Project_User**: user_id, project_id (pivot)

@@ -14,7 +14,7 @@ final class UserSeeder extends Seeder
         // Create admin users
         User::factory()->admin()->create([
             'name' => 'admin',
-            'email' => 'admin@project-reminder.com',
+            'email' => '22523179@students.uii.ac.id',
             'password' => bcrypt('password'),
         ]);
 
@@ -25,6 +25,12 @@ final class UserSeeder extends Seeder
         ]);
 
         // Create member users
+        User::factory()->member()->create([
+            'name' => 'akhnafal',
+            'email' => 'akhnafal03@gmail.com',
+            'password' => bcrypt('password'),
+        ]);
+
         User::factory()->member()->create([
             'name' => 'Developer Senior',
             'email' => 'senior@project-reminder.com',

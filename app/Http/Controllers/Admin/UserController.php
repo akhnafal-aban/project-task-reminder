@@ -33,7 +33,22 @@ class UserController extends Controller
 
     public function show(User $user): View
     {
-        return view('admin.users.show', compact('user'));
+        $projects = $user->projects()->with(['tasks' => function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        }])->get();
+
+        $tasks = $user->tasks()->get();
+        $highPriorityTasks = $tasks->where('priority', 'high');
+        $mediumPriorityTasks = $tasks->where('priority', 'medium');
+        $lowPriorityTasks = $tasks->where('priority', 'low');
+
+        return view('admin.users.show', compact(
+            'user',
+            'projects',
+            'highPriorityTasks',
+            'mediumPriorityTasks',
+            'lowPriorityTasks'
+        ));
     }
 
     public function edit(User $user): View

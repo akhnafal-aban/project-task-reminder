@@ -11,8 +11,9 @@ class StoreProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        // Hanya admin dan anggota proyek yang bisa membuat tugas
         $user = $this->user();
-        return $user && $user->isAdmin();
+        return $user && ($user->isAdmin());
     }
 
     /**

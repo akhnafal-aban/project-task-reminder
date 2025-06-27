@@ -9,8 +9,9 @@ class StoreUserRequest extends FormRequest
 {
     public function authorize()
     {
-        // Only admin can create user
-        return $this->user() && $this->user()->role === 'admin';
+        // Hanya admin dan anggota proyek yang bisa membuat tugas
+        $user = $this->user();
+        return $user && ($user->isAdmin());
     }
 
     public function rules()

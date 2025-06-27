@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\Project;
 use Illuminate\View\View;
@@ -43,6 +44,16 @@ class TaskController extends Controller
 
         return view('admin.task.index', compact('project', 'tasks', 'members'));
     }
+
+    public function show(Project $project, Task $task): View
+    {
+        if ($task->project_id !== $project->id) {
+            abort(404);
+        }
+        $comments = $task->comments()->with('user')->latest()->get();
+        return view('admin.task.show', compact('project', 'task', 'comments'));
+    }
+
     public function store(StoreTaskRequest $request, Project $project): RedirectResponse
     {
         $validated = $request->validated();
@@ -58,18 +69,6 @@ class TaskController extends Controller
         return redirect()->route('admin.task.index', $project)->with('success', 'Tugas berhasil diperbarui.');
     }
 
-    public function show(Project $project, Task $task): View
-    {
-        if ($task->project_id !== $project->id) {
-            abort(404);
-        }
-        $comments = $task->comments()->with('user')->latest()->get();
-        return view('admin.task.show', compact('project', 'task', 'comments'));
-    }
-
-    /**
-     * Simpan komentar pada task
-     */
     public function storeComment(StoreTaskCommentRequest $request, Project $project, Task $task): RedirectResponse
     {
         if ($task->project_id !== $project->id) {

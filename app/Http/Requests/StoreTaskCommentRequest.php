@@ -11,7 +11,9 @@ class StoreTaskCommentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        // Hanya anggota proyek (member) dan admin yang bisa menambah komentar
+        $user = $this->user();
+        return $user && ($user->isAdmin() || $user->isMember());
     }
 
     /**
@@ -22,7 +24,8 @@ class StoreTaskCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'task_id' => ['required', 'exists:tasks,id'],
+            'comment' => ['required', 'string', 'max:1000'],
         ];
     }
 }

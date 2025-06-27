@@ -12,7 +12,7 @@ final class ProjectSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::where('email', 'admin@project-reminder.com')->first();
+        $admin = User::where('email', UserSeeder::ADMIN_EMAIL)->first();
         $manager = User::where('email', 'manager@project-reminder.com')->first();
 
         // Create specific projects

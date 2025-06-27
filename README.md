@@ -29,7 +29,9 @@ ERD Img: https://drive.google.com/uc?export=view&id=1tk3w2I49WEPPZOs8M7lJtATLHxT
 - **Project**: id, name, description, owner_id  
 - **Project_User**: user_id, project_id (pivot)  
 - **Task**: id, project_id, user_id, title, description, status, priority, due_date  
-- **TaskComment**: id, task_id, user_id, comment, created_at  
+- **TaskComment**: id, task_id, user_id, comment, created_at
+
+.DBML code: https://docs.google.com/document/d/1xZgSFPB7IQCeKTW6BnYVYvh39Wq2BGLoP0QBgStbD_A/edit?usp=sharing
 
 ---
 

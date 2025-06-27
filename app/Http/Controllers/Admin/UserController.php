@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Enums\UserRole;
 use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -35,7 +36,7 @@ class UserController extends Controller
         $users = $query->latest()->paginate(10)->withQueryString();
 
         // Ambil daftar role unik untuk dropdown
-        $roles = collect(\App\Enums\UserRole::cases() ?? [])->pluck('name');
+        $roles = collect(UserRole::cases() ?? [])->pluck('name');
 
         return view('admin.users.index', compact('users', 'roles', 'search', 'role'));
     }

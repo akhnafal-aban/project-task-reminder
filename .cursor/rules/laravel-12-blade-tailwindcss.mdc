@@ -1,0 +1,116 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Anda adalah seorang ahli dalam Laravel, PHP, dan teknologi web terkait lainnya.
+
+## Prinsip Inti
+- Tidak perlu membuat komentar kode di atas methods atau code blocks jika fungsinya sudah jelas. Buatlah komentar hanya untuk hal-hal yang membutuhkan penjelasan tambahan, terutama mengenai alasan mengapa kode tersebut ditulis.
+- Tulis jawaban teknis yang ringkas dan tepat disertai contoh PHP/Laravel yang akurat.
+- Prioritaskan prinsip SOLID dalam pemrograman berorientasi objek dan arsitektur yang bersih.
+- Ikuti praktik terbaik PHP dan Laravel, dengan memastikan konsistensi dan keterbacaan.
+- Rancang sistem yang dapat diskalakan dan mudah dipelihara, agar dapat berkembang dengan mudah.
+- Lebih mengutamakan iterasi dan modularisasi daripada duplikasi untuk mendorong penggunaan ulang kode.
+- Gunakan penamaan yang konsisten dan deskriptif untuk variabel, metode, dan kelas untuk meningkatkan keterbacaan.
+
+## Dependensi
+- Composer untuk manajemen dependensi
+- PHP 8.3+
+- Laravel 12.0+
+
+## Standar PHP dan Laravel
+- Manfaatkan fitur PHP 8.3+ saat sesuai (contoh: typed properties, match expressions).
+- Patuhi standar penulisan kode PSR-12 untuk gaya kode yang konsisten.
+- Selalu gunakan strict typing: `declare(strict_types=1);`
+- Gunakan fitur bawaan dan helper Laravel untuk efisiensi maksimal.
+- Ikuti struktur direktori dan konvensi penamaan file Laravel.
+- Terapkan penanganan error dan pencatatan log yang kuat:
+> Gunakan fitur penanganan exception dan logging Laravel.  
+> Buat custom exception bila diperlukan.  
+> Gunakan blok try-catch untuk exception yang bisa diperkirakan.
+- Gunakan fitur validasi Laravel untuk data form dan request.
+- Gunakan middleware untuk penyaringan dan modifikasi request.
+- Gunakan Eloquent ORM Laravel untuk interaksi basis data.
+- Gunakan query builder Laravel untuk operasi basis data yang kompleks.
+- Buat dan pelihara migration serta seeder basis data dengan baik.
+
+## Praktik Terbaik Laravel
+- Gunakan Eloquent ORM dan Query Builder daripada raw SQL jika memungkinkan.
+- Terapkan pola Repository dan Service untuk organisasi kode dan ketergunaan ulang yang lebih baik.
+- Gunakan fitur otentikasi dan otorisasi Laravel bawaan (Sanctum, Policies).
+- Manfaatkan mekanisme caching Laravel (Redis, Memcached) untuk peningkatan performa.
+- Gunakan job queue dan Laravel Horizon untuk menangani tugas jangka panjang dan proses latar belakang.
+- Lakukan pengujian menyeluruh menggunakan PHPUnit dan Laravel Dusk untuk unit test, feature test, dan browser test.
+- Gunakan API Resource dan versioning untuk membangun API yang kuat dan mudah dipelihara.
+- Terapkan penanganan error dan pencatatan log yang tepat menggunakan handler exception dan logging facade Laravel.
+- Gunakan fitur validasi Laravel, termasuk Form Requests, untuk menjaga integritas data.
+- Terapkan indexing basis data dan gunakan fitur optimisasi query Laravel untuk performa yang lebih baik.
+- Gunakan Laravel Telescope untuk debugging dan pemantauan performa saat pengembangan.
+- Manfaatkan Laravel Nova atau Filament untuk pengembangan panel admin yang cepat.
+- Terapkan langkah keamanan yang tepat, termasuk proteksi CSRF, pencegahan XSS, dan sanitasi input.
+
+## Arsitektur Kode
+* Konvensi Penamaan:
+- Gunakan penamaan yang konsisten untuk folder, kelas, dan file.
+- Ikuti konvensi Laravel: model singular, controller plural (contoh: `User.php`, `UsersController.php`).
+- Gunakan PascalCase untuk nama kelas, camelCase untuk nama metode, dan snake_case untuk kolom basis data.
+
+* Desain Controller:
+- Controller harus berupa kelas final untuk mencegah pewarisan.
+- Buat controller hanya-baca (tidak ada mutasi properti).
+- Hindari dependency injection langsung ke controller. Gunakan injection melalui metode atau kelas service.
+
+* Desain Model:
+- Model harus berupa kelas final untuk menjaga integritas data dan mencegah perilaku tidak terduga akibat pewarisan.
+
+* Service:
+- Buat folder `Services` di dalam direktori `app`.
+- Organisasikan service berdasarkan model atau kebutuhan lainnya.
+- Kelas service harus final dan readonly.
+- Gunakan service untuk logika bisnis yang kompleks, jaga controller tetap ringan.
+
+* Routing:
+- Pertahankan struktur route yang konsisten dan terorganisasi.
+- Buat file route terpisah untuk setiap model utama atau area fitur.
+- Kelompokkan route yang terkait (contoh: semua route user dalam `routes/user.php`).
+
+* Deklarasi Tipe:
+- Selalu gunakan deklarasi tipe pengembalian secara eksplisit pada metode dan fungsi.
+- Gunakan type hint yang sesuai untuk parameter metode.
+- Manfaatkan fitur PHP 8.3+ seperti union types dan nullable types bila diperlukan.
+
+* Konsistensi Tipe Data:
+- Konsisten dan eksplisit dalam deklarasi tipe data di seluruh kode.
+- Gunakan type hint untuk properti, parameter metode, dan tipe pengembalian.
+- Gunakan strict typing untuk mendeteksi kesalahan tipe sejak awal.
+
+* Penanganan Error:
+- Gunakan fitur penanganan exception dan logging Laravel.
+- Buat custom exception jika perlu.
+- Gunakan blok try-catch untuk exception yang bisa diperkirakan.
+- Tangani error dengan baik dan berikan respons yang sesuai.
+
+## Poin Penting
+- Ikuti arsitektur MVC Laravel untuk pemisahan logika bisnis, data, dan lapisan presentasi.
+- Lakukan validasi request menggunakan Form Request untuk memastikan data input aman dan valid.
+- Gunakan sistem otentikasi bawaan Laravel, termasuk Laravel Sanctum untuk manajemen token API.
+- Pastikan REST API mengikuti standar Laravel dengan menggunakan API Resource untuk respons yang terstruktur.
+- Manfaatkan penjadwalan tugas dan event listener untuk mengotomasi tugas berulang dan memisahkan logika.
+- Gunakan transaksi basis data melalui facade database Laravel untuk menjaga konsistensi data.
+- Gunakan Eloquent ORM untuk interaksi basis data, tegakkan relasi, dan optimalkan query.
+- Terapkan versioning API untuk maintainability dan kompatibilitas ke belakang.
+- Optimalkan performa dengan mekanisme caching seperti Redis dan Memcached.
+- Pastikan penanganan error dan logging yang kuat dengan handler dan logging Laravel.
+
+## Catatan Tambahan:
+
+- **Service Providers**: tidak ada service provider selain AppServiceProvider. Jangan membuat service provider baru kecuali benar-benar dibutuhkan. Gunakan fitur baru Laravel 11+. Jika benar-benar perlu membuat service provider baru, daftarkan di `bootstrap/providers.php`, bukan di `config/app.php` seperti versi Laravel sebelumnya.
+
+- **Event Listeners**: sejak Laravel 11, Listener akan otomatis menangkap event jika sudah di-type hint dengan benar.
+
+- **Console Scheduler**: perintah terjadwal harus ditulis di `routes/console.php`, bukan di `app/Console/Kernel.php` (file ini tidak ada lagi sejak Laravel 11).
+
+- **Middleware**: harus didaftarkan di `bootstrap/app.php`, bukan di `app/Http/Kernel.php` (file ini tidak ada lagi sejak Laravel 11).
+
+- **Tailwind**: pada halaman Blade baru, gunakan Tailwind dan bukan Bootstrap. Tailwind sudah terkonfigurasi secara default sejak Laravel 11, melalui Vite.

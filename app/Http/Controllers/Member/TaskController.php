@@ -20,7 +20,9 @@ final class TaskController extends Controller
     public function index(Request $request): View
     {
         $user = Auth::user();
-        $query = $user->tasks()->with('project');
+        $query = Task::with('project')->whereHas('users', function ($q) use ($user) {
+            $q->where('users.id', $user->id);
+        });
 
         // Search by name or id
         if ($request->filled('search')) {

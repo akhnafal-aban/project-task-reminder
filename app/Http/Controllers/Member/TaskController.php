@@ -17,10 +17,30 @@ use App\Http\Requests\Member\UpdateTaskStatusRequest;
 final class TaskController extends Controller
 {
     // Menampilkan daftar tugas yang di-assign ke user
-    public function index(): View
+    public function index(Request $request): View
     {
         $user = Auth::user();
-        $tasks = $user->tasks()->with('project')->get();
+        $query = $user->tasks()->with('project');
+
+        // Search by name or id
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%$search%")
+                  ->orWhere('id', $search);
+            });
+        }
+
+        // Sorting
+        $sort = $request->get('sort', 'due_date');
+        $direction = $request->get('direction', 'asc');
+        if (in_array($sort, ['due_date', 'created_at']) && in_array($direction, ['asc', 'desc'])) {
+            $query->orderBy($sort, $direction);
+        } else {
+            $query->orderBy('due_date', 'asc');
+        }
+
+        $tasks = $query->get();
         return view('member.tasks.index', [
             'tasks' => $tasks,
         ]);

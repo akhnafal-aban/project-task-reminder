@@ -44,7 +44,7 @@ final class User extends Authenticatable
     public function assignedProjects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'project_user')
-            ->withTimestamps('assigned_at');
+            ->withPivot('assigned_at');
     }
 
     public function assignedTasks(): HasMany

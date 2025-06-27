@@ -31,15 +31,15 @@ final class Project extends Model
         ];
     }
 
-    public function creator(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function assignedUsers(): BelongsToMany
+    public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'project_user')
             ->withPivot('assigned_at');
+    }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function tasks(): HasMany

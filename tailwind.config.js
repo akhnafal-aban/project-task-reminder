@@ -1,0 +1,3 @@
+plugins: [
+  require('daisyui'),
+]

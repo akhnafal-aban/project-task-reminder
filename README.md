@@ -7,55 +7,103 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# Project Task Reminder
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A modern Laravel-based project management system with dark mode, role-based dashboards, and smart reminders for tasks and projects.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
+- User authentication (login/register)
+- Role-based dashboard (Admin, Member)
+- Project and Task management
+- Task comments and reminders
+- Modern UI/UX (TailwindCSS)
+- Email notifications
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Entity Relationship Diagram (ERD)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+ERD Img: https://drive.google.com/uc?export=view&id=1tk3w2I49WEPPZOs8M7lJtATLHxTPIjWP
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **User**: id, name, email, password, role  
+- **Project**: id, name, description, owner_id  
+- **Project_User**: user_id, project_id (pivot)  
+- **Task**: id, project_id, user_id, title, description, status, priority, due_date  
+- **TaskComment**: id, task_id, user_id, comment, created_at
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+.DBML code: https://docs.google.com/document/d/1xZgSFPB7IQCeKTW6BnYVYvh39Wq2BGLoP0QBgStbD_A/edit?usp=sharing
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Main Flowchart
 
-### Premium Partners
+Flowchart: https://drive.google.com/file/d/14LvHWcCAP8Rtk6bl9ED6HXG_fA_MOQcL/view?usp=drive_link
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## Installation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. **Clone the repository**
+   ```sh
+   git clone <repo-url>
+   cd <project-folder>
+   ```
+2. **Install dependencies**
+   ```sh
+   composer install
+   npm install && npm run build
+   ```
+3. **Copy .env and set up environment**
+   ```sh
+   cp .env.example .env
+   # Edit .env for your DB and mail settings
+   php artisan key:generate
+   ```
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Database Migration & Seeding
 
-## Security Vulnerabilities
+1. **Run migrations**
+   ```sh
+   php artisan migrate:fresh --seed
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
+
+## Running the Application
+
+1. **Start the local server**
+   ```sh
+   php artisan serve
+   ```
+   in another terminal
+   
+   ```sh
+   npm run dev
+   ```
+3. **Access the app**
+   - Open http://localhost:8000
+
+---
+
+## Scheduler & Reminders
+
+1. **Start the Laravel scheduler**
+   ```sh
+   php artisan schedule:work
+   ```
+   or
+   
+   ```sh
+   php artisan tasks:send-reminders
+   ```
+---
+
+## Credits
+Developed by Noor Akhnafal Aban
+
+---
 
 ## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MIT

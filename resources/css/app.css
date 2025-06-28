@@ -1,4 +1,7 @@
 @import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -8,4 +11,65 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+html.dark {
+  background-color: #18181b;
+  color: #f4f4f5;
+}
+
+/* Supabase-inspired dark UI styles */
+body {
+  background-color: #18181b !important;
+  color: #f3f4f6 !important;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+.navbar {
+  background: #232329 !important;
+  color: #f3f4f6 !important;
+  border-bottom: 1px solid #26272b;
+  box-shadow: 0 2px 8px 0 #0000000d;
+}
+.text-xl.font-bold {
+  color: #38d4ae !important;
+  letter-spacing: 0.5px;
+}
+.btn, .btn-sm, .btn-outline {
+  background: #232329;
+  color: #f3f4f6;
+  border: 1px solid #26272b;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.btn:hover, .btn-sm:hover, .btn-outline:hover {
+  background: #38d4ae;
+  color: #18181b;
+  border-color: #38d4ae;
+}
+.btn-error {
+  background: #e5484d !important;
+  border-color: #e5484d !important;
+}
+.btn-error:hover {
+  background: #f87171 !important;
+  color: #18181b !important;
+}
+main.container {
+  background: #232329;
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px 0 #0000001a;
+  padding: 2rem 1.5rem;
+  margin-top: 2rem;
+}
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  background: #232329;
+}
+::-webkit-scrollbar-thumb {
+  background: #26272b;
+  border-radius: 4px;
 }

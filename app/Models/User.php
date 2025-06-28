@@ -44,7 +44,7 @@ final class User extends Authenticatable
     public function assignedProjects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'project_user')
-            ->withTimestamps('assigned_at');
+            ->withPivot('assigned_at');
     }
 
     public function assignedTasks(): HasMany
@@ -55,6 +55,11 @@ final class User extends Authenticatable
     public function comments(): HasMany
     {
         return $this->hasMany(TaskComment::class);
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class, 'assigned_to');
     }
 
     public function isAdmin(): bool

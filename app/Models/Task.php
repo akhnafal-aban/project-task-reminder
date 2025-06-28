@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\TaskPriority;
+use Carbon\Carbon;
 use App\Enums\TaskStatus;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\TaskPriority;
+use Database\Factories\TaskFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 final class Task extends Model
 {
@@ -58,12 +60,12 @@ final class Task extends Model
 
     public function isDueToday(): bool
     {
-        return \Carbon\Carbon::parse($this->due_date)->isToday();
+        return Carbon::parse($this->due_date)->isToday();
     }
 
     public function isDueSoon(): bool
     {
-        return \Carbon\Carbon::parse($this->due_date)->diffInDays(now()) <= 3 && !$this->isOverdue();
+        return Carbon::parse($this->due_date)->diffInDays(now()) <= 3 && !$this->isOverdue();
     }
 
     public function getPriorityColor(): string
@@ -78,6 +80,6 @@ final class Task extends Model
 
     public static function newFactory()
     {
-        return \Database\Factories\TaskFactory::new();
+        return TaskFactory::new();
     }
 }

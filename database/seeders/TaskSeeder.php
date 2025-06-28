@@ -23,6 +23,42 @@ final class TaskSeeder extends Seeder
 
         // Create additional random tasks
         Task::factory()->count(20)->create();
+
+        // Tambahkan 3 task untuk user akhnafal03@gmail.com
+        $akhnaf = User::where('email', 'akhnafal03@gmail.com')->first();
+        $project = $projects->first(); // Bisa ganti logika jika mau variasi project
+
+        if ($akhnaf && $project) {
+            Task::factory()->createMany([
+                [
+                    'project_id' => $project->id,
+                    'assigned_to' => $akhnaf->id,
+                    'title' => 'Integrasi API Wilayah Desa',
+                    'description' => 'Menghubungkan sistem desa dengan API wilayah Kemendagri.',
+                    'status' => 'in_progress',
+                    'priority' => 'high',
+                    'due_date' => now()->addDays(2),
+                ],
+                [
+                    'project_id' => $project->id,
+                    'assigned_to' => $akhnaf->id,
+                    'title' => 'Perbaikan Validasi Form',
+                    'description' => 'Pastikan semua input di halaman pendaftaran divalidasi dengan benar.',
+                    'status' => 'not_started',
+                    'priority' => 'medium',
+                    'due_date' => now()->addDays(5),
+                ],
+                [
+                    'project_id' => $project->id,
+                    'assigned_to' => $akhnaf->id,
+                    'title' => 'Buat Laporan Aktivitas Harian',
+                    'description' => 'Laporan harian backend untuk rekap aktivitas pengguna sistem.',
+                    'status' => 'not_started',
+                    'priority' => 'low',
+                    'due_date' => now()->addDays(7),
+                ],
+            ]);
+        }
     }
 
     private function createProjectTasks(Project $project, $users): void
@@ -182,4 +218,4 @@ final class TaskSeeder extends Seeder
             'assigned_to' => $users->random()->id,
         ]);
     }
-} 
+}

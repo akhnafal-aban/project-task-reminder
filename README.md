@@ -46,6 +46,11 @@ Flowchart: https://drive.google.com/file/d/14LvHWcCAP8Rtk6bl9ED6HXG_fA_MOQcL/vie
 - 22523179@students.uii.ac.id
 - password -> password
 
+## Member Account
+
+- akhnafal03@gmail.com
+- password -> password
+
 ## Installation
 
 1. **Clone the repository**

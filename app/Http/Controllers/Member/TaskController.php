@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Member;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use App\Models\Task;
-use App\Models\TaskComment;
+use App\Enums\TaskStatus;
+use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use App\Services\TaskCommentService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Member\UpdateTaskStatusRequest;
 
 final class TaskController extends Controller
@@ -20,7 +21,7 @@ final class TaskController extends Controller
     public function index(Request $request): View
     {
         $user = Auth::user();
-        
+
         $query = Task::with('project')->where('assigned_to', $user->id);
 
         // Search by name or id
@@ -60,6 +61,8 @@ final class TaskController extends Controller
     public function updateStatus(UpdateTaskStatusRequest $request, Task $task): RedirectResponse
     {
         $task->update(['status' => $request->validated('status')]);
+        Log::info('Requested status:', ['input' => $request->status]);
+        Log::info('Enum cast:', ['casted' => TaskStatus::tryFrom($request->status)]);
         return back()->with('success', 'Status tugas diperbarui.');
     }
 

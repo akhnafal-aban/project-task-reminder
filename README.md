@@ -76,11 +76,7 @@ ERD Img: https://drive.google.com/uc?export=view&id=1tk3w2I49WEPPZOs8M7lJtATLHxT
 
 1. **Run migrations**
    ```sh
-   php artisan migrate
-   ```
-2. **(Optional) Seed database**
-   ```sh
-   php artisan db:seed
+   php artisan migrate:fresh --seed
    ```
 
 ---
@@ -90,6 +86,10 @@ ERD Img: https://drive.google.com/uc?export=view&id=1tk3w2I49WEPPZOs8M7lJtATLHxT
 1. **Start the local server**
    ```sh
    php artisan serve
+   ```
+   in another terminal
+   ```sh
+   npm run dev
    ```
 2. **Access the app**
    - Open http://localhost:8000

@@ -88,10 +88,11 @@ ERD Img: https://drive.google.com/uc?export=view&id=1tk3w2I49WEPPZOs8M7lJtATLHxT
    php artisan serve
    ```
    in another terminal
+   
    ```sh
    npm run dev
    ```
-2. **Access the app**
+3. **Access the app**
    - Open http://localhost:8000
 
 ---
@@ -102,7 +103,11 @@ ERD Img: https://drive.google.com/uc?export=view&id=1tk3w2I49WEPPZOs8M7lJtATLHxT
    ```sh
    php artisan schedule:work
    ```
-
+   or
+   
+   ```sh
+   php artisan tasks:send-reminders
+   ```
 ---
 
 ## Credits

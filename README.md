@@ -102,10 +102,6 @@ ERD Img: https://drive.google.com/uc?export=view&id=1tk3w2I49WEPPZOs8M7lJtATLHxT
    ```sh
    php artisan schedule:work
    ```
-   At production, add this to your server's cron:
-   ```sh
-   * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
-   ```
 
 ---
 

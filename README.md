@@ -37,17 +37,7 @@ ERD Img: https://drive.google.com/uc?export=view&id=1tk3w2I49WEPPZOs8M7lJtATLHxT
 
 ## Main Flowchart
 
-```
-[User Login/Register]
-        ↓
-[Dashboard]
-   ↓           ↓
-[Projects]   [Tasks]
-   ↓           ↓
-[View/Add/Edit/Delete]
-   ↓
-[Task Reminders & Comments]
-```
+Flowchart: https://drive.google.com/file/d/14LvHWcCAP8Rtk6bl9ED6HXG_fA_MOQcL/view?usp=drive_link
 
 ---
 

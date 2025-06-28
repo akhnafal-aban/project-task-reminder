@@ -61,8 +61,8 @@ final class TaskController extends Controller
     public function updateStatus(UpdateTaskStatusRequest $request, Task $task): RedirectResponse
     {
         $task->update(['status' => $request->validated('status')]);
-        Log::info('Requested status:', ['input' => $request->status]);
-        Log::info('Enum cast:', ['casted' => TaskStatus::tryFrom($request->status)]);
+        // Log::info('Requested status:', ['input' => $request->status]);
+        // Log::info('Enum cast:', ['casted' => TaskStatus::tryFrom($request->status)]);
         return back()->with('success', 'Status tugas diperbarui.');
     }
 

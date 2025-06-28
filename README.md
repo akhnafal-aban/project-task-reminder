@@ -41,6 +41,11 @@ Flowchart: https://drive.google.com/file/d/14LvHWcCAP8Rtk6bl9ED6HXG_fA_MOQcL/vie
 
 ---
 
+## Admin account
+
+22523179@students.uii.ac.id
+password
+
 ## Installation
 
 1. **Clone the repository**

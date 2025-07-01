@@ -1,0 +1,93 @@
+# 1. Version control
+.git/
+.gitignore
+.gitattributes
+
+# 2. Node.js dependencies and artifacts
+node_modules/
+npm-debug.log
+yarn-debug.log
+
+# 3. PHP Composer vendor (if not needed in build context)
+vendor/
+
+# 4. IDE/editor/project files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 5. Build and output directories
+public/build/
+dist/
+build/
+out/
+tmp/
+temp/
+*.tmp
+
+# 6. Test and coverage artifacts
+test/
+tests/
+.pytest_cache/
+.coverage
+
+# 7. Python cache (for completeness)
+__pycache__/
+*.pyc
+*.pyo
+
+# 8. Go build/test artifacts (for completeness)
+*.test
+.go-cache/
+
+# 9. Java build artifacts (for completeness)
+target/
+*.class
+.gradle/
+
+# 10. Environment and secrets
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.crt
+config.local.*
+*.local.yml
+
+# 11. Documentation and markdown
+README*
+*.md
+docs/
+
+# 12. Docker files (if not needed in build context)
+Dockerfile*
+docker-compose*
+
+# 13. Miscellaneous
+.svn/
+.hg/
+.local/
+local/
+
+# 14. Storage and cache (Laravel specific)
+storage/
+bootstrap/cache/
+
+# 15. Database artifacts (if not needed)
+database/*.sqlite
+database/*.db
+
+# 16. Log files
+*.log
+storage/logs/
+
+# 17. Public user uploads (if any)
+public/storage/
+
+# 18. Exclude lock files from ignore (explicitly allow)
+!composer.lock
+!package-lock.json
+
+# End of .dockerignore

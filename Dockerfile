@@ -22,7 +22,7 @@ FROM php:8.2-fpm-alpine AS final
 # Install system dependencies and PHP extensions
 RUN apk add --no-cache \
     icu-dev libzip-dev zlib-dev libpng-dev libjpeg-turbo-dev freetype-dev \
-    oniguruma-dev bash curl git sqlite
+    oniguruma-dev bash curl git sqlite sqlite-dev pdo_sqlite 
 
 RUN docker-php-ext-install intl pdo pdo_mysql pdo_sqlite zip gd
 
@@ -55,4 +55,4 @@ USER appuser
 EXPOSE 8000
 
 # Default command: start Laravel's built-in server
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD ["php", "artisan", "serve", "--host=127.0.0.1", "--port=8000"]

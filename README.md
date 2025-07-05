@@ -110,6 +110,64 @@ Flowchart: https://drive.google.com/file/d/14LvHWcCAP8Rtk6bl9ED6HXG_fA_MOQcL/vie
    ```
 ---
 
+---
+
+## Running with Docker
+
+This project includes a complete Docker setup for local development and testing. The Docker configuration uses multi-stage builds for optimized images and runs the app as a non-root user for security.
+
+### Requirements
+- Docker (latest)
+- Docker Compose (v2 recommended)
+
+### Services & Ports
+- **php-app**: Laravel application (PHP 8.2, Node 20, Composer 2.7)
+  - Exposes: `http://localhost:8000`
+- **mysql-db**: MySQL database
+  - Exposes: `localhost:3306`
+
+### Environment Variables
+- The application uses the `.env` file for configuration. The `docker-compose.yml` automatically loads `.env`.
+- MySQL service uses these defaults (override in `.env` if needed):
+  - `MYSQL_DATABASE=laravel`
+  - `MYSQL_USER=laravel`
+  - `MYSQL_PASSWORD=secret`
+  - `MYSQL_ROOT_PASSWORD=rootsecret`
+
+### Build & Run
+1. **Copy and configure environment**
+   ```sh
+   cp .env.example .env
+   # Edit .env as needed for your local setup
+   ```
+2. **Build and start the containers**
+   ```sh
+   docker compose up --build
+   ```
+   This will build the PHP app (with Composer and Node assets) and start both the app and MySQL services.
+
+3. **Access the application**
+   - Open [http://localhost:8000](http://localhost:8000) in your browser.
+
+### Database & Storage
+- MySQL data is persisted in a Docker volume (`mysql-data`).
+- Laravel's `storage` and `bootstrap/cache` directories are writable by the app user in the container.
+
+### Additional Notes
+- The app runs as a non-root user inside the container for security.
+- The default command starts Laravel's built-in server on port 8000.
+- For artisan commands, you can use:
+  ```sh
+  docker compose exec php-app php artisan <command>
+  ```
+- For npm scripts (e.g., asset rebuilds), use:
+  ```sh
+  docker compose exec php-app npm run <script>
+  ```
+
+---
+
+
 ## Credits
 Developed by Noor Akhnafal Aban
 
